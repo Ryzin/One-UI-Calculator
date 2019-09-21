@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--未点击按钮-->
+    <item android:state_window_focused="false">
+        <layer-list>
+            <item>
+                <shape
+                    android:shape="oval" android:useLevel="true">
+                    <!-- 填充的颜色 -->
+                    <solid android:color="@color/colorPrimaryDark" />
+                    <size
+                        android:width="50dp"
+                        android:height="50dp"
+                        />
+                </shape>
+            </item>
+
+            <item android:drawable="@mipmap/science"
+                android:width="30dp"
+                android:height="20dp"
+                android:gravity="center"></item>
+        </layer-list>
+    </item>
+
+    <!--点击按钮-->
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape
+                    android:shape="oval" android:useLevel="true">
+                    <!-- 填充的颜色 -->
+                    <solid android:color="@color/colorButtonNumBorder" />
+                    <size
+                        android:width="50dp"
+                        android:height="50dp"
+                        />
+                </shape>
+            </item>
+
+            <item android:drawable="@mipmap/science"
+                android:width="30dp"
+                android:height="20dp"
+                android:gravity="center"></item>
+        </layer-list>
+    </item>>
+</selector>

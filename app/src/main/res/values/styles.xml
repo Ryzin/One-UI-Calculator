@@ -1,0 +1,70 @@
+<resources>
+
+    <!-- Base application theme. 不要标题栏NoActionBar -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--标题栏底色-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--状态栏底色-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--亮色状态栏，则会使用黑色图标-->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!-- 按钮主题 作为parent style用于继承-->
+    <style name="ButtonTheme">
+        <item name="android:textSize">30dp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:stateListAnimator">@null</item><!--阴影-->
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <!-- 数字按钮主题 -->
+    <style name="ButtonNumTheme" parent="ButtonTheme">
+        <!--<item name="android:minHeight">0dp</item>-->
+        <!--<item name="android:minWidth">0dp</item>-->
+        <!--<item name="android:paddingLeft">10dp</item>-->
+        <!--<item name="android:paddingRight">10dp</item>-->
+        <!--<item name="android:paddingBottom">4dp</item>-->
+        <!--<item name="android:paddingTop">2dp</item>-->
+        <item name="android:textColor">@color/colorButtonNumText</item>
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    </style>
+
+    <!-- 运算符按钮主题 -->
+    <style name="ButtonOperatorTheme" parent="ButtonTheme">
+        <item name="android:textColor">@color/colorButtonEqualBackground</item>
+    </style>
+
+    <!-- 等号按钮主题 -->
+    <style name="ButtonEqualTheme" parent="ButtonTheme">
+        <item name="android:textColor">@color/colorButtonNumBackground</item>
+    </style>
+
+    <!-- 清除按钮主题 -->
+    <style name="ButtonCleanTheme" parent="ButtonTheme">
+        <item name="android:textColor">@color/colorButtonClean</item>
+    </style>
+
+    <!-- 横线主题 -->
+    <style name="LineHorizontal">
+        <item name="android:layout_width">304dp</item>
+        <item name="android:layout_height">10dp</item>
+    </style>
+
+    <!-- 竖线主题 -->
+    <style name="LineVertical">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">304dp</item>
+    </style>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorButtonNumBorder"/>
+    <size
+        android:height="1dp"/> <!--layout_height一定要大于线的高度,线才会显示出来-->
+</shape>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#fcfcfc</color>
+    <color name="colorPrimaryDark">#fcfcfc</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorButtonNumBackground">#f4f4f4</color>
+    <color name="colorButtonNumBorder">#e1e1e1</color>
+    <color name="colorButtonNumPressed">#c3c3c3</color>
+    <color name="colorButtonNumText">#3f3f3f</color>
+    <color name="colorButtonEqualBackground">#55a37b</color>
+    <color name="colorButtonEqualPressed">#438263</color>
+    <color name="colorButtonClean">#e4684c</color>
+</resources>
