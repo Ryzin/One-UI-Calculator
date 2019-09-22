@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <alpha
+        android:duration="200"
+        android:fromAlpha="1"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:repeatCount="1"
+        android:fillAfter="true"
+        android:repeatMode="restart"
+        android:toAlpha="0" />
+</set>
+    <!--set在外围作为标签-->
+    <!--透明度标签为alpha-->
+    <!--duration表示动画持续时间-->
+    <!--fromAlpha表示开始透明度值-->
+    <!--toAlpha表示结束透明度-->
+    <!--repeatCount表示重复次数-->
+    <!--repeatMode表示重复的模式-->
+    <!--fillAfter表示结束后是否保持状态-->
+    <!--interpolator表示插值器，可以改变动画的变化速率-->

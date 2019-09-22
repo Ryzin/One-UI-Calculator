@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:layout_weight="0.8"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
         <TextView
@@ -40,20 +40,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp">
+        android:layout_marginHorizontal="20dp">
 
         <ImageButton
-            android:id="@+id/history_imgBtn"
+            android:id="@+id/imgBtn_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_history_selector"/>
+            android:background="@drawable/button_history_selector"
+            android:contentDescription="@string/historyContentDescription" />
         <ImageButton
-            android:id="@+id/ruler_imgBtn"
+            android:id="@+id/imgBtn_ruler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_ruler_selector"/>
         <ImageButton
-            android:id="@+id/science_imgBtn"
+            android:id="@+id/imgBtn_science"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_science_selector"/>
@@ -62,7 +63,7 @@
             android:layout_height="match_parent"
             android:gravity="right">
             <ImageButton
-                android:id="@+id/delete_imgBtn"
+                android:id="@+id/imgBtn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_delete_selector"/>
@@ -99,7 +100,7 @@
                 android:id="@+id/btn_brackets"
                 style="@style/ButtonOperatorTheme"
                 android:background="@drawable/button_num_selector"
-                android:textSize="23dp"
+                android:textSize="26dp"
                 android:text="@string/brackets" />
 
             <Button
@@ -205,6 +206,7 @@
                 android:text="@string/plus" />
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -236,6 +238,32 @@
 
                 />
         </LinearLayout>
+
+        <!--嵌套控件测试-->
+        <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:tools="http://schemas.android.com/tools"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--tools:context=".MainActivity" >-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/textView1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignTop="@id/button1"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:text="hello"-->
+                <!--android:textSize="60dp">-->
+            <!--</TextView>-->
+
+            <!--<Button-->
+                <!--android:id="@+id/button1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Button" />-->
+
+        <!--</RelativeLayout>-->
+
     </LinearLayout>
 
 

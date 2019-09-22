@@ -21,6 +21,7 @@
     <string name="brackets">()</string>
     <string name="clean">C</string>
     <string name="delete">←</string>
+    <string name="historyContentDescription">Show operation history.</string>
 
 
 
