@@ -194,7 +194,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    class BasicOperator {
+    //工厂模式接口
+    interface methodFactory {
+        //通用方法
+        public void apply(View v);
+    }
+
+    class BasicOperator implements methodFactory {
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
 
@@ -210,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class LeftBracket {
+    class LeftBracket implements methodFactory {
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
 
@@ -234,7 +242,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class RightBracket {
+    class RightBracket implements methodFactory {
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
 
@@ -246,7 +255,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class Number {
+    class Number implements methodFactory {
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
 
@@ -259,13 +269,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class PlusOrSub {
+    class PlusOrSub implements methodFactory {
+        @Override
         public void apply(View v) {
             Toast.makeText(getApplicationContext(), "负数功能待实现" , Toast.LENGTH_SHORT).show();
         }
     }
 
-    class Clean {
+    class Clean implements methodFactory{
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
             //更新序列
@@ -273,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class Equal {
+    class Equal implements methodFactory {
 //        private int countLetter(String str, String letter) {
 //            int positionOfLetter = str.indexOf("(");
 //            int countNumberOfLetters = 0;
@@ -286,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
 //            return countNumberOfLetters;
 //        }
 
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
             TextView textView_bottom = findViewById(R.id.textView_bottom);
@@ -319,25 +332,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class History {
+    class History implements methodFactory {
+        @Override
         public void apply(View v) {
             Toast.makeText(getApplicationContext(), "历史功能待实现" , Toast.LENGTH_SHORT).show();
         }
     }
 
-    class Ruler {
+    class Ruler implements methodFactory {
+        @Override
         public void apply(View v) {
             Toast.makeText(getApplicationContext(), "单位转换功能待实现" , Toast.LENGTH_SHORT).show();
         }
     }
 
-    class Science {
+    class Science implements methodFactory {
+        @Override
         public void apply(View v) {
             Toast.makeText(getApplicationContext(), "科学计算功能待实现" , Toast.LENGTH_SHORT).show();
         }
     }
 
-    class Delete {
+    class Delete implements methodFactory {
+        @Override
         public void apply(View v) {
             TextView textView_top = findViewById(R.id.textView_top);
 
