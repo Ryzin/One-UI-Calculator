@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,24 +23,21 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
     public static final  String TAG = "MainActivity";
     Map<String, Integer> buttonIdMap = new HashMap<>();
     Map<Integer, Object> methodMap = new HashMap<>();
 
-//    public class OnTouchSwitch{
-//        void actionDown(View v) {
-//            ScaleAnimation animation = new ScaleAnimation(1, 0.8f, 1, 0.8f,
-//                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-//            animation.setDuration(100);//设置动画持续时间
-//            v.startAnimation(animation);
-//
-//            Log.d(TAG, "---onTouchEvent action:ACTION_DOWN");
-//        }
-//    }
+    public boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches(); //是整数返回true,否则返回false
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         initBtn();
         initMethodMap();
+        initTextView();
     }
 
     //绑定组件方法
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 "btn_1", "btn_2", "btn_3", "btn_plus",
                 "btn_4", "btn_5", "btn_6",  "btn_sub",
                 "btn_7", "btn_8", "btn_9",  "btn_mul",
-                "btn_clean", "btn_brackets", "btn_percent", "btn_div",
+                "btn_clean", "btn_left_bracket", "btn_right_bracket","btn_div",
                 "imgBtn_history", "imgBtn_ruler", "imgBtn_science", "imgBtn_delete"};
 
         //存放button的id到buttonIdMap
@@ -86,19 +87,254 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initMethodMap() {
-        String[] btn_name = {"btn_plusOrSub", "btn_0", "btn_dot", "btn_equal",
-                "btn_1", "btn_2", "btn_3", "btn_plus",
-                "btn_4", "btn_5", "btn_6",  "btn_sub",
-                "btn_7", "btn_8", "btn_9",  "btn_mul",
-                "btn_clean", "btn_brackets", "btn_percent", "btn_div",
-                "imgBtn_history", "imgBtn_ruler", "imgBtn_science", "imgBtn_delete"};
-        int id = buttonIdMap.get("btn_0");
-        methodMap.put(id, new Normal());
-        id = buttonIdMap.get("imgBtn_delete");
-        methodMap.put(id, new Delete());
+        //方法工厂
+        String[] num_name = {"btn_0", "btn_1", "btn_2", "btn_3",
+                "btn_4", "btn_5", "btn_6", "btn_7",
+                "btn_8", "btn_9"};
+        int id;
+        for(int i = 0; i < num_name.length; ++i) {
+            id = buttonIdMap.get(num_name[i]);
+            methodMap.put(id, new Number());
+        }
+        String[] operator_name = {"btn_plus", "btn_sub", "btn_mul", "btn_div",
+                "btn_right_bracket", "btn_dot"};
+        for(int i = 0; i < operator_name.length; ++i) {
+            id = buttonIdMap.get(operator_name[i]);
+            methodMap.put(id, new BasicOperator());
+        }
+
+        id = buttonIdMap.get("btn_left_bracket");
+        methodMap.put(id, new LeftBracket());
+        id = buttonIdMap.get("btn_right_bracket");
+        methodMap.put(id, new RightBracket());
+
+        id = buttonIdMap.get("btn_clean");
+        methodMap.put(id, new Clean());
+        id = buttonIdMap.get("btn_plusOrSub");
+        methodMap.put(id, new PlusOrSub());
         id = buttonIdMap.get("btn_equal");
         methodMap.put(id, new Equal());
 
+        id = buttonIdMap.get("imgBtn_history");
+        methodMap.put(id, new History());
+        id = buttonIdMap.get("imgBtn_ruler");
+        methodMap.put(id, new Ruler());
+        id = buttonIdMap.get("imgBtn_science");
+        methodMap.put(id, new Science());
+        id = buttonIdMap.get("imgBtn_delete");
+        methodMap.put(id, new Delete());
+        //more method
+
+    }
+
+    private void initTextView() {
+        TextView textView_top = findViewById(R.id.textView_top);
+
+        //为textview添加文本变化监听事件，每次变化都判断表达式合法性并计算结果
+        textView_top.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //s--未改变之前的内容
+                //start--内容被改变的开始位置
+                //count--原始文字被删除的个数
+                //after--新添加的内容的个数
+
+                //---------start和count结合从s中获取被删除的内容-------
+                //String deleText = s.toString().substring(start, start + count);
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //s--改变之后的新内容
+                //start--内容被改变的开始位置
+                //before--原始文字被删除的个数
+                //count--新添加的内容的个数
+
+                //---------start和count结合从s中获取新添加的内容-------
+                //String addText = s.toString().substring(start, start + count);
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                TextView textView_top = findViewById(R.id.textView_top);
+                TextView textView_bottom = findViewById(R.id.textView_bottom);
+
+                //更新序列
+                CharSequence cs; //可读可写序列
+                cs = textView_top.getText();
+
+                String expression = cs.toString();
+                if(expression.equals(""))
+                    return;
+
+                //修正表达式
+                expression = expression.replace('×', '*');
+                expression = expression.replace('÷', '/');
+
+                ExpressionValidity ev = new ExpressionValidity();
+
+                if(!ev.checkExpression(expression)) { //检测表达式是否正确
+                    cs = "";
+                    textView_bottom.setText(cs);
+                    return;
+                }
+
+                // 送去解析
+                Lexer p = new Lexer(expression);
+                //p.print();
+
+                // 转为后序表达式
+                Trans t = new Trans(p.getList());
+                //t.print();
+
+                // 计算结果
+                Calculator c = new Calculator(t.getPostfixList());
+                cs = c.getResult();
+
+                textView_bottom.setText(cs);
+            }
+        });
+    }
+
+    class BasicOperator {
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+
+            //更新序列
+            CharSequence cs; //可读可写序列
+            Button btn = (Button) v; //为了获取按钮的text
+            cs = textView_top.getText();
+            int length = cs.length();
+            if(length > 0) {
+                cs = cs + btn.getText().toString();
+            }
+            textView_top.setText(cs);
+        }
+    }
+
+    class LeftBracket {
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+
+            //更新序列
+            CharSequence cs; //可读可写序列
+            cs = textView_top.getText();
+            int length = cs.length();
+            if(length == 0) {
+                cs = cs + "(";
+                textView_top.setText(cs);
+                return;
+            }
+
+            String lastChar = cs.subSequence(length - 1, length).toString(); //获取序列最后一个字符
+
+            if(isInteger(lastChar) || lastChar.equals(")"))
+                cs = cs + "×";
+
+            cs = cs + "(";
+            textView_top.setText(cs);
+        }
+    }
+
+    class RightBracket {
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+
+            //更新序列
+            CharSequence cs; //可读可写序列
+            cs = textView_top.getText();
+            cs = cs + ")";
+            textView_top.setText(cs);
+        }
+    }
+
+    class Number {
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+
+            //更新序列
+            CharSequence cs; //可读可写序列
+            Button btn = (Button) v; //为了获取按钮的text
+            cs = textView_top.getText() + btn.getText().toString();
+
+            textView_top.setText(cs);
+        }
+    }
+
+    class PlusOrSub {
+        public void apply(View v) {
+            Toast.makeText(getApplicationContext(), "负数功能待实现" , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class Clean {
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+            //更新序列
+            textView_top.setText("");
+        }
+    }
+
+    class Equal {
+//        private int countLetter(String str, String letter) {
+//            int positionOfLetter = str.indexOf("(");
+//            int countNumberOfLetters = 0;
+//
+//            while (positionOfLetter != -1) {
+//                countNumberOfLetters++;
+//                positionOfLetter = str.indexOf("(", positionOfLetter + 1);
+//            }
+//
+//            return countNumberOfLetters;
+//        }
+
+        public void apply(View v) {
+            TextView textView_top = findViewById(R.id.textView_top);
+            TextView textView_bottom = findViewById(R.id.textView_bottom);
+
+            if(textView_bottom.getText().equals(""))
+                return;
+
+            Animation outAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.result_push_up_out_animation);
+            textView_bottom.startAnimation(outAnimation);
+            outAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    TextView textView_top = findViewById(R.id.textView_top);
+                    textView_top.setText("");
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    TextView textView_top = findViewById(R.id.textView_top);
+                    TextView textView_bottom = findViewById(R.id.textView_bottom);
+                    textView_top.setText(textView_bottom.getText());
+                    textView_bottom.setText("");
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+        }
+    }
+
+    class History {
+        public void apply(View v) {
+            Toast.makeText(getApplicationContext(), "历史功能待实现" , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class Ruler {
+        public void apply(View v) {
+            Toast.makeText(getApplicationContext(), "单位转换功能待实现" , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class Science {
+        public void apply(View v) {
+            Toast.makeText(getApplicationContext(), "科学计算功能待实现" , Toast.LENGTH_SHORT).show();
+        }
     }
 
     class Delete {
@@ -107,37 +343,12 @@ public class MainActivity extends AppCompatActivity {
 
             //更新序列
             int length = textView_top.getText().length(); //可读可写序列
-            CharSequence cs = textView_top.getText().subSequence(0, length - 1);
-            textView_top.setText(cs);
-        }
-    }
-
-    class Equal {
-        public void apply(View v) {
-            TextView textView_top = findViewById(R.id.textView_top);
-
-            //更新序列
-            CharSequence cs; //可读可写序列
-            Button btn = (Button) v; //为了获取按钮的text
-            cs = textView_top.getText() + btn.getText().toString();
-
-            textView_top.setText(cs);
-
-            //上移渐变动画
-            //TranslateAnimation translateIn = new TranslateAnimation(0, 0, 50, 0);
-        }
-    }
-
-    class Normal {
-        public void apply(View v) {
-            TextView textView_top = findViewById(R.id.textView_top);
-
-            //更新序列
-            CharSequence cs; //可读可写序列
-            Button btn = (Button) v; //为了获取按钮的text
-            cs = textView_top.getText() + btn.getText().toString();
-
-            textView_top.setText(cs);
+            Log.d(TAG, length + "");
+            CharSequence cs;
+            if(length > 0) {
+                cs = textView_top.getText().subSequence(0, length - 1);
+                textView_top.setText(cs);
+            }
         }
     }
 
@@ -190,7 +401,7 @@ public class MainActivity extends AppCompatActivity {
 //               v.startAnimation(animation);
                 //Toast.makeText(getApplicationContext(), "按钮点击" , Toast.LENGTH_SHORT).show();
 
-                Log.d(TAG, "---onTouchEvent action:ACTION_DOWN");
+                //Log.d(TAG, "---onTouchEvent action:ACTION_DOWN");
                 return false; //如果返回true ，那么就把事件拦截，onclick无法响应；返回false，就同时执行onClick方法。
             }
             //抬起操作
@@ -222,17 +433,17 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                });
 
-                Log.d(TAG, "---onTouchEvent action:ACTION_UP");
+                //Log.d(TAG, "---onTouchEvent action:ACTION_UP");
                 return false;
             }
             //移动操作
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                Log.d(TAG, "---onTouchEvent action:ACTION_MOVE");
+                //Log.d(TAG, "---onTouchEvent action:ACTION_MOVE");
                 return false;
             }
             //取消操作
             if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                Log.d(TAG, "---onTouchEvent action:ACTION_CANCEL");
+                //Log.d(TAG, "---onTouchEvent action:ACTION_CANCEL");
                 return false;
             }
             return true;
@@ -250,15 +461,21 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            Object obj = methodMap.get(v.getId()); //根据id从methodMap获取方法对象
 
-            TextView textView_top = findViewById(R.id.textView_top);
-
-            CharSequence cs; //可读可写序列
-            Button btn = (Button) v; //为了获取按钮的text
-            cs = textView_top.getText() + btn.getText().toString();
-
-            textView_top.setText(cs);
-            //Toast.makeText(getApplicationContext(), "按钮点击" , Toast.LENGTH_SHORT).show();
+            //执行方法对象的通用apply方法(通过反射)
+            try {
+                Method m = obj.getClass().getMethod("apply", View.class); //获取apply方法，参数为View类型
+                try {
+                    m.invoke(obj, v); //执行方法，返回类型为Object
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    Log.i("IllegalAccessException | InvocationTargetException", "invoke apply method failure");
+                    e.printStackTrace();
+                }
+            } catch (NoSuchMethodException e) {
+                Log.i("NoSuchMethodException", "get method failure");
+                e.printStackTrace();
+            }
         }
     }
 }

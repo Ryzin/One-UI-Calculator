@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="1000">
+    <translate
+        android:fromYDelta="0%"
+        android:toYDelta="-42%"
+        android:duration="50"
+        android:fillAfter="true"
+        android:interpolator="@android:anim/accelerate_interpolator">
+        <scale
+            android:duration="50"
+            android:fromXScale="1"
+            android:fromYScale="1"
+            android:toXScale="2"
+            android:toYScale="2"
+            android:pivotX = "100%"
+            android:pivotY = "50%"
+            android:fillAfter="true">
+            <!--duration：动画的执行时间 毫秒为单位-->
+            <!--fromXScale:执行动画的起始缩放X轴-->
+            <!--fromYScale：执行动画的起始缩放Y轴-->
+            <!--pivotX：缩放起点X轴坐标-->
+            <!--pivotY：缩放起点Y轴坐标-->
+            <!--toXScale:执行动画的结束缩放X轴-->
+            <!--toYScale：执行动画的结束缩放Y轴-->
+        </scale>
+    </translate>
+
+
+
+
+</set>
+

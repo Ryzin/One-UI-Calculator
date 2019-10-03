@@ -18,7 +18,8 @@
     <string name="mul">×</string>
     <string name="div">÷</string>
     <string name="percent">%</string>
-    <string name="brackets">()</string>
+    <string name="left_bracket">(</string>
+    <string name="right_bracket">)</string>
     <string name="clean">C</string>
     <string name="delete">←</string>
     <string name="historyContentDescription">Show operation history.</string>

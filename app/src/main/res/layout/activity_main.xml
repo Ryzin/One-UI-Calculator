@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity"
     android:background="@color/colorPrimary">
@@ -13,27 +14,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        android:layout_weight="0.6"
+        android:layout_weight="0.5"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:gravity="right"
+            android:layout_weight="0.3"
+            android:singleLine="true"
+            android:ellipsize="start"
+            android:gravity="center_vertical|right"
             android:fontFamily="sans-serif-light"
-            android:textSize="40dp" />
+            android:textSize="60dp" />
 
         <TextView
             android:id="@+id/textView_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:gravity="right"
-            android:text="textView_bottom"
+            android:layout_weight="0.7"
+            android:gravity="center_vertical|right"
             android:fontFamily="sans-serif-light"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -95,17 +97,18 @@
                 android:text="@string/clean" />
 
             <Button
-                android:id="@+id/btn_brackets"
+                android:id="@+id/btn_left_bracket"
                 style="@style/ButtonOperatorTheme"
                 android:background="@drawable/button_num_selector"
                 android:textSize="26dp"
-                android:text="@string/brackets" />
+                android:text="@string/left_bracket" />
 
             <Button
-                android:id="@+id/btn_percent"
+                android:id="@+id/btn_right_bracket"
                 style="@style/ButtonOperatorTheme"
                 android:background="@drawable/button_num_selector"
-                android:text="@string/percent" />
+                android:textSize="26dp"
+                android:text="@string/right_bracket" />
 
             <Button
                 android:id="@+id/btn_div"
@@ -232,9 +235,7 @@
                 android:id="@+id/btn_equal"
                 style="@style/ButtonEqualTheme"
                 android:background="@drawable/button_equal_selector"
-                android:text="@string/equal"
-
-                />
+                android:text="@string/equal" />
         </LinearLayout>
 
         <!--嵌套控件测试-->
