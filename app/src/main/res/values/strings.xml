@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculator</string>
+    <string name="app_name">One UI Calculator</string>
     <string name="zero">0</string>
     <string name="one">1</string>
     <string name="two">2</string>
@@ -23,11 +23,4 @@
     <string name="clean">C</string>
     <string name="delete">←</string>
     <string name="historyContentDescription">Show operation history.</string>
-
-
-
-
-
-
-
 </resources>

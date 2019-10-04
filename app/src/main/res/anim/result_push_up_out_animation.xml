@@ -25,9 +25,5 @@
             <!--toYScale：执行动画的结束缩放Y轴-->
         </scale>
     </translate>
-
-
-
-
 </set>
 
